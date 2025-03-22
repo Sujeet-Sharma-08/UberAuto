@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
+// define routes
 app.use('/users', userRoutes);
 
 

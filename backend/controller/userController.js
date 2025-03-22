@@ -11,8 +11,8 @@ module.exports.registerUser = async(req,res,next)=>{
             errors:errors.array()});
     }
 
-    // console.log("hello")
-    const {fullname, email, password} = req.body;
+  
+    const {fullname, email, password} = req.body; 
 
     const hashedPassword = await User.hashPassword(password);
 
