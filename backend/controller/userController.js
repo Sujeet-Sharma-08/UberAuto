@@ -28,3 +28,36 @@ module.exports.registerUser = async(req,res,next)=>{
     res.status(201).json({token, user});
     next();
 }
+
+
+//login Controller
+
+exports.loginUser = async(req,res,next)=>{
+
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            message:"Validation Error",
+            errors:errors.array()
+        });
+    }
+    const {email, password} = req.body;
+
+    const existingUser = await User.findOne({email}).select("+password");//means email and paasword both will be selected
+    
+    if(!existingUser){
+        return res.status(401).json("Invalid email or password");
+    }
+
+    const isMatch = await existingUser.comparePassword(password);
+
+    if(!isMatch){
+        return res.status(401).json("Invalid email or password")
+    }
+
+    const token = existingUser.generateAuthToken();
+
+
+    res.status(200).json({token,existingUser});
+
+}

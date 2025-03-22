@@ -45,7 +45,7 @@ This folder contains the backend service for the UberAuto application. It handle
 
 ### User Registration
 
-**POST** `users/register`
+**POST** `/users/register`
 
 - **Request Body**:
 
@@ -75,6 +75,57 @@ This folder contains the backend service for the UberAuto application. It handle
   }
   ```
 
+### User Login
+
+**POST** `/users/login`
+
+- **Description**: This endpoint allows users to log in by providing their email and password. If the credentials are valid, a JWT token is returned along with the user's details.
+
+- **Request Body**:
+
+  ```json
+  {
+    "email": "user@example.com",
+    "password": "password123"
+  }
+  ```
+
+- **Response**:
+  ```json
+  {
+    "token": "<jwt_token>",
+    "existingUser": {
+      "_id": "<user_id>",
+      "fullname": {
+        "firstname": "John",
+        "lastname": "Doe"
+      },
+      "email": "user@example.com"
+    }
+  }
+  ```
+
+- **Error Responses**:
+  - **400**: Validation Error
+    ```json
+    {
+      "message": "Validation Error",
+      "errors": [
+        {
+          "msg": "Invalid value",
+          "param": "email",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+  - **401**: Invalid email or password
+    ```json
+    {
+      "message": "Invalid email or password"
+    }
+    ```
+
 ## Folder Structure
 
 ```
@@ -89,3 +140,6 @@ backend/
 │   └── user.service.js
 └── README.md
 ```
+
+
+
